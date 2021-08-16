@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
+import { ApolloServer, gql } from 'apollo-server';
 
 const typeDefs = gql`
 	type Query {
@@ -13,6 +13,6 @@ const server = new ApolloServer({
 	resolvers,
 });
 
-server.listen(4444).then(({ url }) => {
+server.listen().then(({ url }) => {
 	console.log(`Executando em ${url}`);
 });
