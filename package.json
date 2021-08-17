@@ -1,22 +1,23 @@
 {
-	"name": "modilap-api",
+	"name": "eventos-api",
 	"version": "1.0.0",
-	"main": "index.js",
-	"repository": "https://github.com/Navesvjv/modilap-api.git",
-	"author": "Joao Victor <srjnaves@gmail.com>",
+	"main": "src/index.js",
+	"repository": "https://github.com/serverti/eventos-api.git",
+	"author": "serverti",
 	"license": "MIT",
 	"scripts": {
-		"start": "nodemon -r dotenv/config -r sucrase/register src/index.js"
+		"dev": "nodemon -r dotenv/config -r sucrase/register src/index.js",
+		"latest": "npx knex --cwd src/knex/ migrate:latest"
 	},
 	"dependencies": {
 		"apollo-server": "^3.1.2",
 		"dotenv": "^10.0.0",
 		"graphql": "^15.5.1",
-		"knex": "^0.21.21",
-		"pg": "^8.7.1",
-		"sucrase": "^3.20.1"
+		"knex": "^0.21.20",
+		"pg": "^8.7.1"
 	},
 	"devDependencies": {
-		"nodemon": "^2.0.12"
+		"nodemon": "^2.0.12",
+		"sucrase": "^3.20.1"
 	}
 }

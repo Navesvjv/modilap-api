@@ -1,18 +1,11 @@
-import { ApolloServer, gql } from 'apollo-server';
-
-const typeDefs = gql`
-	type Query {
-		ola: String
-	}
-`;
-
-const resolvers = {};
+import { ApolloServer } from 'apollo-server';
+import { resolvers, typeDefs } from './graphql/schema';
 
 const server = new ApolloServer({
-	typeDefs,
-	resolvers,
+  typeDefs,
+  resolvers,
 });
 
-server.listen().then(({ url }) => {
-	console.log(`Executando em ${url}`);
+server.listen(4009).then(({ url }) => {
+  console.log(`Server listening on url ${url}`);
 });
