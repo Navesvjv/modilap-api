@@ -1,11 +1,10 @@
 import { ApolloServer } from 'apollo-server';
-import { resolvers, typeDefs } from './graphql/schema';
+const graphql = require('./src/graphql');
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+	...graphql,
 });
 
 server.listen(4009).then(({ url }) => {
-  console.log(`Server listening on url ${url}`);
+	console.log(`Server listening on url ${url}`);
 });

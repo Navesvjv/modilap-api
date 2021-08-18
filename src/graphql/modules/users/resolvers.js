@@ -1,8 +1,4 @@
-import { knex } from '../../knex/index.js';
-
-const selectAll = id => {
-	console.log(knex.select().from('users').where({ id: id }).first());
-};
+import { knex } from '../../../knex/index.js';
 
 const user = async (_, { id }, __) => {
 	return await knex
@@ -34,7 +30,7 @@ const deleteUser = async (_, { id }, __) => {
 	return 'Deletado!';
 };
 
-export const usersResolvers = {
+module.exports = {
 	Query: { user, users },
 	Mutation: { createUser, updateUser, deleteUser },
 };
