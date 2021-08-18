@@ -1,19 +1,35 @@
+type User {
+	increments: Int
+	id: String
+	name: String
+	email: String
+	created_at: String
+	updated_at: String
+}
+
+input UserInput {
+	name: String
+	email: String
+}
+
+input UserInputCreate {
+	id: String
+	name: String
+	email: String
+}
+
+input UserFilter {
+	id: String
+	email: String
+}
+
 type Query {
-	user(id: String!): User!
-	users(limit: Int, offset: Int): [User!]!
+	user(id: String!): User
+	users(limit: Int, offset: Int): [User]
 }
 
 type Mutation {
-	createUser(name: String!, email: String!): User!
-	updateUser(id: String!, name: String, email: String): User!
-	deleteUser(id: String!): String
-}
-
-type User {
-	increments: Int!
-	id: String!
-	name: String!
-	email: String!
-	created_at: String
-	updated_at: String
+	createUser(data: UserInputCreate): User
+	updateUser(id: String!, data: UserInput): User
+	deleteUser(filter: UserFilter): Boolean
 }

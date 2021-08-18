@@ -1,36 +1,17 @@
-import { knex } from '../../../knex/index.js';
-
-const user = async (_, { id }, __) => {
-	return await knex
-		.select()
-		.from('users')
-		.where({
-			id,
-		})
-		.first();
-};
-
-const users = async (_, { limit, offset }) => {
-	return await knex.select().from('users').limit(limit).offset(offset);
-};
-
-const createUser = async (_, args, __) => {
-	args['id'] = new Date().getTime().toString();
-	const id = await knex.returning('id').insert(args).into('users');
-	return await knex.select().from('users').where({ id: id[0] }).first();
-};
-
-const updateUser = async (_, args, __) => {
-	const id = await knex('users').returning('id').where({ id: args.id }).update(args);
-	return await knex.select().from('users').where({ id: id[0] }).first();
-};
-
-const deleteUser = async (_, { id }, __) => {
-	const a = await knex('users').where({ id }).del();
-	return 'Deletado!';
-};
+const db = require('../../../knex/index.js');
 
 module.exports = {
-	Query: { user, users },
-	Mutation: { createUser, updateUser, deleteUser },
+	Query: {
+		user: async (_, { id }) => await db('users').where({ id }).first(),
+		users: async (_, { limit, offset }) => await db('users').limit(limit).offset(offset),
+	},
+	Mutation: {
+		createUser: async (_, { data }) => await (await db('users').insert(data).returning('*'))[0],
+		updateUser: async (_, { id, data }) => await (await db('users').where({ id }).update(data).returning('*'))[0],
+		deleteUser: async (_, { filter }) => {
+			if (filter.id) return await db('users').where({ id: filter.id }).delete();
+			if (filter.email) return await db('users').where({ email: filter.email }).delete();
+			throw new Error('Favor passar um parametro!');
+		},
+	},
 };
