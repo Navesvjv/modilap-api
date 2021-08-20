@@ -1,35 +1,44 @@
 type User {
 	increments: Int
 	id: String
+	token: String
 	name: String
 	email: String
+	pwdhash: String
 	created_at: String
 	updated_at: String
 }
 
-input UserInput {
-	name: String
-	email: String
+input DataNotNull {
+	name: String!
+	email: String!
+	pwdhash: String!
 }
 
-input UserInputCreate {
-	id: String
+input Data {
 	name: String
 	email: String
+	pwdhash: String
 }
 
-input UserFilter {
-	id: String
+input DataLogin {
+	email: String
+	pwdhash: String
+}
+
+input IdOrEmail {
+	id: Int
 	email: String
 }
 
 type Query {
-	user(id: String!): User
-	users(limit: Int, offset: Int): [User]
+	# user(id: String!): User
+	# users(limit: Int, offset: Int): [User]
+	login(data: DataLogin): User
 }
 
 type Mutation {
-	createUser(data: UserInputCreate): User
-	updateUser(id: String!, data: UserInput): User
-	deleteUser(filter: UserFilter): Boolean
+	createUser(data: DataNotNull): User
+	updateUser(id: String!, data: Data): User
+	deleteUser(filter: IdOrEmail): Boolean
 }
